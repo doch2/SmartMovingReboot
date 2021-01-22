@@ -18,18 +18,17 @@
 package net.smart.moving;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
+import api.player.forge.PlayerAPIPlugin;
 import api.player.model.ModelPlayerAPI;
 import api.player.model.ModelPlayerBaseSorting;
 import api.player.render.RenderPlayerAPI;
 import api.player.render.RenderPlayerBaseSorting;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
