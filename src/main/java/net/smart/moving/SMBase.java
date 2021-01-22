@@ -871,9 +871,9 @@ public abstract class SMBase {
 			int k = MathHelper.floor(sp.posZ);
 			Block block = getBlock(sp.world, i, j, k);
 			if (block != null) {
-				double posY = sp.getEntityBoundingBox().minY + 0.1D;
+				double posY = sp.getEntityBoundingBox().minY + 0.3D;
 				double motionX = -playerMotionX * 4D;
-				double motionY = 1.5D;
+				double motionY = 0.2D;
 				double motionZ = -playerMotionZ * 4D;
 
 				spawnSlindingParticle += horizontalSpeedSquare;
@@ -882,7 +882,7 @@ public abstract class SMBase {
 				while (spawnSlindingParticle > maxSpawnSlindingParticle) {
 					double posX = sp.posX + getSpawnOffset();
 					double posZ = sp.posZ + getSpawnOffset();
-					sp.world.spawnParticle(EnumParticleTypes.BLOCK_CRACK, posX, posY, posZ, motionX, motionY, motionZ,
+					sp.world.spawnParticle(EnumParticleTypes.BLOCK_DUST, posX, posY, posZ, motionX, motionY, motionZ, //paticle of a fox moving
 							new int[] { Block.getStateId(getState(i, j, k)) });
 					spawnSlindingParticle -= maxSpawnSlindingParticle;
 				}
