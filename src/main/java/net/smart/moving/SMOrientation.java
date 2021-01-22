@@ -90,7 +90,7 @@ public class SMOrientation {
 	protected int _i, _k;
 	private boolean _isDiagonal;
 	private Set<EnumFacing> _facings;
-	private EnumFacing _facing;
+	final EnumFacing _facing;
 	private float _directionAngle;
 	private float _mimimumClimbingAngle;
 	private float _maximumClimbingAngle;
@@ -186,8 +186,8 @@ public class SMOrientation {
 			_facings.add(facing);
 
 		All.add(this);
+		_facing = facings.length > 0 ? facings[0] : null;
 		if (facings.length == 1) {
-			_facing = facings[0];
 			Orthogonals.add(this);
 			FacingToOrientation.put(_facing, this);
 		} else
@@ -1707,11 +1707,11 @@ public class SMOrientation {
 		Block block = state.getBlock();
 		if (block instanceof BlockPane)
 			return ((BlockPane) block).canPaneConnectTo(world,
-					new BlockPos(i + direction._i, j_offset, k + direction._k), _facing);
+					new BlockPos(i + direction._i, j_offset, k + direction._k), this._facing);
 		else if (isFenceBase(state)) {
 			if (block instanceof BlockFence)
 				return ((BlockFence) block).canConnectTo(world,
-						new BlockPos(i + direction._i, local_offset + j_offset, k + direction._k), _facing);
+						new BlockPos(i + direction._i, local_offset + j_offset, k + direction._k), this._facing);
 			if (block instanceof BlockWall)
 				return BlockWallUtil.canConnectTo(block, world,
 						new BlockPos(i + direction._i, local_offset + j_offset, k + direction._k));
@@ -2361,11 +2361,7 @@ public class SMOrientation {
 	}
 
 	private static EnumFacing getValue(IBlockState state, PropertyDirection property) {
-		try {
-			return state.getValue(property);
-		} catch (IllegalArgumentException e) {
-			return null;
-		}
+		return state.getValue(property);
 	}
 
 	private static Enum getValue(IBlockState state, PropertyEnum property) {
