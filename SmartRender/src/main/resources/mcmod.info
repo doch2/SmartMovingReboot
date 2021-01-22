@@ -1,0 +1,11 @@
+[{
+  "modid": "smartrender",
+  "name": "Smart Render",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "description": "Replaces the vanilla render model for the player with a much more useable one:\n\n * implement better animations with less code\n * attach additional renderers wherever you want\n * only worry about the animations of your own renderers",
+  "credits": "",
+  "requiredMods": [ "Forge@[12.18.1.2011,)" ],
+  "url": "https://github.com/JonnyNova/SmartRender",
+  "authors": [ "Divisor", "JonnyNova" ]
+}]
