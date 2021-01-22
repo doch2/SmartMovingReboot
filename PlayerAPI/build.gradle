@@ -1,12 +1,16 @@
 buildscript {
     repositories {
         jcenter()
-        maven { url = "http://files.minecraftforge.net/maven" }
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
+
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 file "build.properties" withReader {
@@ -15,27 +19,14 @@ file "build.properties" withReader {
     ext.config = new ConfigSlurper().parse prop
 }
 
-version = "${config.smartrender.version}"
-group = "net.smart"
-archivesBaseName = "SmartRender"
+version = "${config.playerapi.version}"
+group = "api.player"
+archivesBaseName = "PlayerAPI"
 
 ext.simpleVersion = version
 version = "${config.minecraft.version}-${project.version}"
 
-sourceCompatibility = targetCompatibility = '1.8'
-compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
-}
-
-configurations {
-    provided
-    embedded
-    compile.extendsFrom provided, embedded
-}
-
 dependencies {
-    compile project(":PlayerAPI")
-    provided files("libs/RenderPlayerAPI-1.12.2-1.0.jar")
 }
 
 idea.module.scopes.PROVIDED.plus += [configurations.provided]
@@ -43,11 +34,22 @@ idea.module.scopes.PROVIDED.plus += [configurations.provided]
 minecraft {
     version = "${config.minecraft.version}-${config.forge.version}"
     runDir = "run"
-    
+
     mappings = "${config.minecraft.mappings}"
 
     replace "@VERSION@", project.simpleVersion
-    replace "/*@MCVERSIONDEP@*/", ", acceptedMinecraftVersions = \"[${config.minecraft.version},${config.minecraft.version}+)\""
+    replace "@MCVERSION@", config.minecraft.version
+}
+
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+jar {
+    manifest {
+        attributes 'FMLCorePlugin': project.group + '.forge.PlayerAPIPlugin'
+    }
 }
 
 processResources {
@@ -64,13 +66,5 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
         exclude 'application.conf'
-    }
-}
-
-jar {
-    configurations.embedded.each { dep ->
-        from(project.zipTree(dep)) {
-            exclude 'META-INF', 'META-INF/**'
-        }
     }
 }

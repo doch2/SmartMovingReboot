@@ -35,8 +35,8 @@ configurations {
 }
 
 dependencies {
-    provided files("libs/PlayerAPI-1.12.2-1.0.jar")
     provided files("libs/RenderPlayerAPI-1.12.2-1.0.jar")
+	compile project(":PlayerAPI")
     compile project(":SmartRender")
 }
 
