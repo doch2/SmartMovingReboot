@@ -6,7 +6,7 @@
 
 제작: 도치(doch2) | (원본 소스코드 작성자: Divisor and JonnyNova, elveskevtar)
 
-[기존 모드](https://www.curseforge.com/minecraft/mc-mods/smart-moving)가 1.8.9에서 업데이트가 멈춤에 따라, Divisor과 JonnyNova가 1.10.2버전으로 모드를 포팅시켰습니다. 그 1.10.2 스마트무빙에서 eleveskevtar가 1.12.2로 2차 포팅을 시켰으나, 포팅된 버전에서 서버가 구동되지 않는 등 몇가지 오류가 있음을 발견해 수정을 거친 버전입니다.
+[기존 모드](https://www.curseforge.com/minecraft/mc-mods/smart-moving)가 1.8.9에서 업데이트가 멈춤에 따라, [Divisor과 JonnyNova가 1.10.2버전으로 모드](https://github.com/JonnyNova/SmartMoving)를 포팅시켰습니다. 그 1.10.2 스마트무빙에서 [eleveskevtar가 1.12.2로 2차 포팅](https://github.com/elveskevtar/SmartMoving)을 시켰으나, 포팅된 버전에서 서버가 구동되지 않는 등 몇가지 오류가 있음을 발견해 수정을 거친 버전입니다.
 
 
 
