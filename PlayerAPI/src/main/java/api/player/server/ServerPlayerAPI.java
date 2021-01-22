@@ -18,6 +18,8 @@
 
 package api.player.server;
 
+import net.minecraft.server.dedicated.DedicatedPlayerList;
+
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -1846,8 +1848,10 @@ public final class ServerPlayerAPI
 				throw new RuntimeException("Unable to aquire list of current server players.", obfuscatedException);
 			}
 		}
+
+		DedicatedPlayerList playerList = (DedicatedPlayerList) entityPlayerList;
 		if(entityPlayerList != null)
-			for(Object entityPlayer : (List<?>)entityPlayerList)
+			for (Object entityPlayer : playerList.getPlayers())
 				result.add((IServerPlayerAPI)entityPlayer);
 		return result;
 	}
