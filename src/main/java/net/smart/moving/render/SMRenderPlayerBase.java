@@ -114,7 +114,7 @@ public class SMRenderPlayerBase extends RenderPlayerBase implements IRenderPlaye
 	public IModelPlayer getMovingModelBipedMain() {
 		for (Object layer : renderPlayerAPI.getLayerRenderersField())
 			if (layer instanceof LayerArmorBase)
-				return getPlayerBase((ModelBiped) Reflect.GetField(_modelArmor, layer));
+				return (IModelPlayer) getPlayerBase((ModelBiped) Reflect.GetField(_modelArmor, layer));
 		return null;
 	}
 
