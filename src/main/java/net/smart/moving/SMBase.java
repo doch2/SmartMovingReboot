@@ -31,6 +31,7 @@ import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateBase;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -521,8 +522,12 @@ public abstract class SMBase {
 	private boolean isOpenBlockSpace(BlockPos pos, boolean top) {
 		IBlockState blockState = getState(pos);
 		IBlockState upBlockState = getState(pos.up());
-		return !blockState.getBlock().isNormalCube(blockState, sp.world, pos)
-				&& (!top || !upBlockState.getBlock().isNormalCube(blockState, sp.world, pos.up()));
+		if (upBlockState.toString().contains("chiselsandbits")) { //A Block in 'chisels-and-bits' mode does not return PropertyBool properly
+			return false;
+		} else {
+			return !blockState.getBlock().isNormalCube(blockState, sp.world, pos)
+					&& (!top || !upBlockState.getBlock().isNormalCube(blockState, sp.world, pos.up()));
+		}
 	}
 
 	public boolean isInsideOfMaterial(Material material) {
