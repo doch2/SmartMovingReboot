@@ -1,14 +1,21 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 buildscript {
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
-        maven { url = "http://files.minecraftforge.net/maven" }
+        mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
     }
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
-//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+
+
+apply plugin: 'net.minecraftforge.gradle'
+// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
 file "build.properties" withReader {
     def prop = new Properties()
@@ -23,67 +30,117 @@ archivesBaseName = "SmartMoving"
 ext.simpleVersion = version
 version = "${config.minecraft.version}-${project.version}"
 
-sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
+task updateVersion(type: Copy) {
+    from('src')
+            {
+                exclude 'mcmod.info'
+            }
+    into 'build/sources/java'
+    filter(ReplaceTokens, tokens: [VERSION: project.version.toString()])
 }
 
-compileJava.options.encoding = 'UTF-8'
+compileJava.dependsOn updateVersion
+compileJava.source = 'build/sources/java'
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
+minecraft {
+    mappings channel: 'snapshot', version: '20171003-1.12'
 
-configurations {
-    provided
-    embedded
-    compile.extendsFrom provided, embedded
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            // Force-load Player API in dev workspace
+            property 'fml.coreMods.load', 'api.player.forge.RenderPlayerAPIPlugin,api.player.forge.PlayerAPIPlugin'
+        }
+
+        server {
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            // Force-load Player API in dev workspace
+            property 'fml.coreMods.load', 'api.player.forge.RenderPlayerAPIPlugin,api.player.forge.PlayerAPIPlugin'
+        }
+    }
 }
 
 dependencies {
-    provided files("libs/RenderPlayerAPI-1.12.2-1.0.jar")
+    // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
+    // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
+    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2854'
+
+    implementation files('libs/RenderPlayerAPI-1.12.2-1.0.jar')
     compile project(":PlayerAPI")
     compile project(":SmartRender")
+
+    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
+    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+
 }
 
-minecraft {
-    version = "${config.minecraft.version}-${config.forge.version}"
-    runDir = "run"
-    
-    // the mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   snapshot are built nightly.
-    // stable_#            stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not always work.
-    // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = "${config.minecraft.mappings}"
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
-    
-    replace "@VERSION@", project.simpleVersion
-}
-
+// Example for how to get properties into the manifest for reading by the runtime..
 jar {
-    configurations.embedded.each { dep ->
-        from(project.zipTree(dep)) {
-            exclude 'META-INF', 'META-INF/**'
-        }
+    manifest {
+        attributes([
+                "Specification-Title": "smartmoving",
+                "Specification-Vendor": "doch13_",
+                "Specification-Version": "1", // We are version 1 of ourselves
+                "Implementation-Title": project.name,
+                "Implementation-Version": "${version}",
+                "Implementation-Vendor" :"doch13_",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
     }
 }
 
 processResources {
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", "${config.minecraft.version}-${config.forge.version}"
+
+    // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-        expand 'version': project.simpleVersion, 'mcversion': config.minecraft.version
+
+        // replace version and mcversion
+        expand 'version':project.simpleVersion, 'mcversion':config.minecraft.version
     }
-    
-    from(sourceSets.main.resources.srcDirs) {
-        include 'application.conf'
-        filter { line ->
-            line.replaceAll("@VERSION@", project.simpleVersion)
-        }
-    }
-    
+
+    // copy everything else except the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
-        exclude 'application.conf'
     }
 }
+
+// Example configuration to allow publishing using the maven-publish task
+// This is the preferred method to reobfuscate your jar file
+jar.finalizedBy('reobfJar')
+// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
+//publish.dependsOn('reobfJar')
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
+}
+
+sourceSets { main { output.resourcesDir = output.classesDir } }
