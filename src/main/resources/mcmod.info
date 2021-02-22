@@ -8,5 +8,5 @@
   "credits": "Divisor, JonnyNova, elveskevtar, _DarKShaM_, Cassiobsk8, Dunncann for translations",
   "url": "https://github.com/doch2/SmartMovingReboot.git",
   "dependencies": [ "PlayerAPI", "Smart Render", "RenderPlayerAPI" ],
-  "requiredMods": [ "Forge@[14.23.5.2768,)", "Smart Render@[3.0-RC2,)", "PlayerAPI@[1.1,)" ]
+  "requiredMods": [ "Forge@[14.23.5.2854,)", "Smart Render@[3.0-RC2,)", "PlayerAPI@[1.1,)" ]
 }]

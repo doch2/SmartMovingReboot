@@ -5,7 +5,7 @@ Recommend Korean version.
 Smart Moving Mod
 ================
 
-Version 17.0-RC3 for Minecraft Client 1.12.2
+Version 17.0-RC4 for Minecraft Client 1.12.2
 
 by doch2 | (Original Creator: Divisor and JonnyNova, elveskevtar) 
 
