@@ -10,8 +10,11 @@ Version 17.0-RC4 for Minecraft Client 1.12.2
 by doch2 | (Original Creator: Divisor and JonnyNova, elveskevtar) 
 
 This mode was ported to version 1.10.2 by [Divisor and Jonny Nova](https://github.com/JonnyNova/SmartMoving), as the update stopped at version 1.8.9. [(Old SmartMoving)](https://www.curseforge.com/minecraft/mc-mods/smart-moving) In the new smart moving mode source code, the [elevskevtar made the second port](https://github.com/elveskevtar/SmartMoving) at 1.12.2. 
-But elevskevtar's version include some errors, so i  modified errors. This repository is the one I modified.
+But elevskevtar's version include some errors, so i modified errors. This repository is the one I modified.
 
+This project is an open source, with errors and unimplemented functions compared to smart moving developed by existing developers. We highly welcome those who are capable of fixing it!
+For those who are not familiar with GitHub, please refer to the link below to make it easier for you to contribute.
+- Contribution Description Post: http://bit.ly/3dGhNK6, http://bit.ly/37H07tV
 
 Description
 ===========
