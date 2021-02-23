@@ -81,8 +81,9 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2854'
 
-    implementation files('libs/RenderPlayerAPI-1.12.2-1.0.jar')
+    //implementation files('libs/RenderPlayerAPI-1.12.2-1.0.jar')
     compile project(":PlayerAPI")
+    compile project(":RenderPlayerAPI")
     compile project(":SmartRender")
 
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
