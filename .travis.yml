@@ -17,8 +17,10 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
     
-install: ./gradlew setupCiWorkspace -S -q
-script: ./gradlew build
-    
+install:
+  - ./gradlew build
+script:
+  - ./gradlew test
+
 notifications:
   email: false
