@@ -1,3 +1,10 @@
+[![](http://cf.way2muchnoise.eu/full_449519_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/smart-moving-reboot) - Smart Moving Reboot
+
+[![](http://cf.way2muchnoise.eu/full_449535_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/smartrender) - SmartRender
+
+[![](http://cf.way2muchnoise.eu/full_449521_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/playerapi) - PlayerAPI
+
+[![](http://cf.way2muchnoise.eu/full_449533_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/renderplayerapi) - RenderPlayerAPI
 
 스마트무빙 모드
 ================
@@ -6,7 +13,7 @@
 
 제작: 도치(doch2) | (원본 소스코드 작성자: Divisor and JonnyNova, elveskevtar)
 
-[기존 모드](https://www.curseforge.com/minecraft/mc-mods/smart-moving)가 1.8.9에서 업데이트가 멈춤에 따라, [Divisor과 JonnyNova가 1.10.2버전으로 모드](https://github.com/JonnyNova/SmartMoving)를 포팅시켰습니다. 그 1.10.2 스마트무빙에서 [eleveskevtar가 1.12.2로 2차 포팅](https://github.com/elveskevtar/SmartMoving)을 시켰으나, 포팅된 버전에서 서버가 구동되지 않는 등 몇가지 오류가 있음을 발견해 수정을 거친 버전입니다.
+Divisor가 만든 [기존 모드](https://www.curseforge.com/minecraft/mc-mods/smart-moving)가 1.8.9에서 업데이트가 멈춤에 따라, [JonnyNova가 1.10.2버전으로 모드](https://github.com/JonnyNova/SmartMoving)를 포팅시켰습니다. 그 1.10.2 스마트무빙에서 [eleveskevtar가 1.12.2로 2차 포팅](https://github.com/elveskevtar/SmartMoving)을 시켰으나, 포팅된 버전에서 서버가 구동되지 않는 등 몇가지 오류가 있음을 발견해 수정을 거친 버전입니다.
 
 본 프로젝트는 오픈소스로, 아직 기존 개발자가 개발하던 스마트무빙에 비해 오류들과 구현되지 않은 기능들이 있습니다. 이를 고쳐주실 능력자분들을 적극 환영합니다!
 GitHub가 익숙지 않으신 분들은 아래 링크를 참고하시면 쉽게 기여를 하실 수 있으시니 적극 기여 부탁드리겠습니다 (__)

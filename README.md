@@ -1,3 +1,13 @@
+[![](http://cf.way2muchnoise.eu/full_449519_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/smart-moving-reboot) - Smart Moving Reboot
+
+[![](http://cf.way2muchnoise.eu/full_449535_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/smartrender) - SmartRender
+
+[![](http://cf.way2muchnoise.eu/full_449521_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/playerapi) - PlayerAPI
+
+[![](http://cf.way2muchnoise.eu/full_449533_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/renderplayerapi) - RenderPlayerAPI
+
+
+
 [If you want to find the Korean version mode description, please click here!(한국어 버전 모드 설명을 찾길 원하신다면, 여기를 눌러주세요!)](https://github.com/doch2/SmartMovingReboot/blob/master/README_Korean.md)
 Recommend Korean version.
 
@@ -9,7 +19,7 @@ Version 17.0-RC4 for Minecraft Client 1.12.2
 
 by doch2 | (Original Creator: Divisor and JonnyNova, elveskevtar) 
 
-This mode was ported to version 1.10.2 by [Divisor and Jonny Nova](https://github.com/JonnyNova/SmartMoving), as the update stopped at version 1.8.9. [(Old SmartMoving)](https://www.curseforge.com/minecraft/mc-mods/smart-moving) In the new smart moving mode source code, the [elevskevtar made the second port](https://github.com/elveskevtar/SmartMoving) at 1.12.2. 
+This mode was ported to version 1.10.2 by [JonnyNova](https://github.com/JonnyNova/SmartMoving), as the update stopped at version 1.8.9. [(Old SmartMoving by Divisor)](https://www.curseforge.com/minecraft/mc-mods/smart-moving) In the new smart moving mode source code, the [elevskevtar made the second port](https://github.com/elveskevtar/SmartMoving) at 1.12.2. 
 But elevskevtar's version include some errors, so i modified errors. This repository is the one I modified.
 
 This project is an open source, with errors and unimplemented functions compared to smart moving developed by existing developers. We highly welcome those who are capable of fixing it!
@@ -68,7 +78,7 @@ To use this mode, you need the following things:
 Installation
 ============
 
-Move the Smart Moving files "${mod.render.file}" and "${%mod.moving.file}" into the subfolder "mods" of your Minecraft Forge installation folder. In case this folder does not exist, create it or run your Minecraft Forge client at least once.
+Move the Smart Moving files into the subfolder "mods" of your Minecraft folder. In case this folder does not exist, create it or run your Minecraft Forge client at least once.
 
 Don't forget to:
 * ensure you have the latest version of Player API core installed!
