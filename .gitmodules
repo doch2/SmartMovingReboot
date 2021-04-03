@@ -1,0 +1,9 @@
+[submodule "PlayerAPI"]
+	path = PlayerAPI
+	url = https://github.com/doch2/PlayerAPI
+[submodule "RenderPlayerAPI"]
+	path = RenderPlayerAPI
+	url = https://github.com/doch2/RenderPlayerAPI
+[submodule "SmartRender"]
+	path = SmartRender
+	url = https://github.com/doch2/SmartRender
