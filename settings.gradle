@@ -1,3 +1,0 @@
-include ':SmartRender'
-include ':PlayerAPI'
-include ':RenderPlayerAPI'

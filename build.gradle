@@ -1,5 +1,3 @@
-import org.apache.tools.ant.filters.ReplaceTokens
-
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
@@ -10,43 +8,32 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
     }
 }
-
-
+        
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-file "build.properties" withReader {
-    def prop = new Properties()
-    prop.load(it)
-    ext.config = new ConfigSlurper().parse prop
-}
-
-version = "${config.smartmoving.version}"
-group = "net.smart" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "SmartMoving"
-
-ext.simpleVersion = version
-version = "${config.minecraft.version}-${project.version}"
+version = '20.0-rc1'
+group = 'com.dochsoft.smartmoving' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'smartmoving'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
-task updateVersion(type: Copy) {
-    from('src')
-            {
-                exclude 'mcmod.info'
-            }
-    into 'build/sources/java'
-    filter(ReplaceTokens, tokens: [VERSION: project.version.toString()])
-}
-
-compileJava.dependsOn updateVersion
-compileJava.source = 'build/sources/java'
-
 minecraft {
+    // The mappings can be changed at any time, and must be in the following format.
+    // snapshot_YYYYMMDD   Snapshot are built nightly.
+    // stable_#            Stables are built at the discretion of the MCP team.
+    // Use non-default mappings at your own risk. they may not always work.
+    // Simply re-run your setup task after changing the mappings to update your workspace.
+    //mappings channel: 'snapshot', version: '20171003-1.12'
     mappings channel: 'snapshot', version: '20171003-1.12'
+    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    
+    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
+    // Default run configurations.
+    // These can be tweaked, removed, or duplicated as needed.
     runs {
         client {
             workingDirectory project.file('run')
@@ -56,9 +43,6 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-
-            // Force-load Player API in dev workspace
-            property 'fml.coreMods.load', 'api.player.forge.RenderPlayerAPIPlugin,api.player.forge.PlayerAPIPlugin'
         }
 
         server {
@@ -68,10 +52,13 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-
-            // Force-load Player API in dev workspace
-            property 'fml.coreMods.load', 'api.player.forge.RenderPlayerAPIPlugin,api.player.forge.PlayerAPIPlugin'
         }
+    }
+}
+
+repositories {
+    maven {
+        url = "https://www.cursemaven.com"
     }
 }
 
@@ -81,11 +68,23 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2854'
 
-    //implementation files('libs/RenderPlayerAPI-1.12.2-1.0.jar')
-    compile project(":PlayerAPI")
-    compile project(":RenderPlayerAPI")
-    compile project(":SmartRender")
+    implementation fg.deobf('curse.maven:obfuscate-289380:2912288')
 
+    // You may put jars on which you depend on in ./libs or you may define them like so..
+    // compile "some.group:artifact:version:classifier"
+    // compile "some.group:artifact:version"
+
+    // Real examples
+    // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
+    // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
+
+    // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
+    // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+
+    // These dependencies get remapped to your current MCP mappings
+    // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+
+    // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
@@ -95,39 +94,20 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title": "smartmoving",
-                "Specification-Vendor": "doch13_",
-                "Specification-Version": "1", // We are version 1 of ourselves
-                "Implementation-Title": project.name,
-                "Implementation-Version": "${version}",
-                "Implementation-Vendor" :"doch13_",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            "Specification-Title": "examplemod",
+            "Specification-Vendor": "examplemodsareus",
+            "Specification-Version": "1", // We are version 1 of ourselves
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"examplemodsareus",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
-    }
-}
-
-processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", "${config.minecraft.version}-${config.forge.version}"
-
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-
-        // replace version and mcversion
-        expand 'version':project.simpleVersion, 'mcversion':config.minecraft.version
-    }
-
-    // copy everything else except the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
     }
 }
 
 // Example configuration to allow publishing using the maven-publish task
 // This is the preferred method to reobfuscate your jar file
-jar.finalizedBy('reobfJar')
+jar.finalizedBy('reobfJar') 
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
 //publish.dependsOn('reobfJar')
 
@@ -143,5 +123,3 @@ publishing {
         }
     }
 }
-
-sourceSets { main { output.resourcesDir = output.classesDir } }
