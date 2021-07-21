@@ -668,7 +668,7 @@ public class SMConfig extends SMProperties {
 			.up(2F, _sneakingExhautionLossFactor.maximum(1F))
 			.comment("Standing exhaustion loss factor (>= 1, >= \"move.exhaustion.sneak.loss.factor\")");
 	public final Property<Float> _fallExhautionLossFactor = PositiveFactor("move.exhaustion.fall.loss.factor")
-			.up(2.5F, _standingExhautionLossFactor)
+			.up(2.5F, 0.0F)
 			.comment("Falling exhaustion loss factor (>= \"move.exhaustion.stand.loss.factor\")");
 
 	public final Property<Float> _ceilClimbingExhaustionLossFactor = PositiveFactor(
