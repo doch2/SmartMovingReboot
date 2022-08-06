@@ -108,6 +108,67 @@ public class SMSelf extends SMBase implements ISMSelf {
 	}
 
 	public void moveEntityWithHeading(float moveStrafing, float moveForward) {
+		
+		if(sp.isElytraFlying()) {
+			
+			//Basically copy paste from vanilla Elytra code. 
+			//This works because SM has no idea Elytras exist, if it did, we wouldn't need to do this
+			
+			double d3;
+			double d11;
+			float f5;
+			if (sp.motionY > -0.5) {
+				sp.fallDistance = 1.0f;
+			}
+			Vec3d vec3d = sp.getLookVec();
+			float f = sp.rotationPitch * 0.017453292f;
+			double d6 = Math.sqrt(vec3d.x * vec3d.x + vec3d.z * vec3d.z);
+			double d8 = Math.sqrt(sp.motionX * sp.motionX + sp.motionZ * sp.motionZ);
+			double d1 = vec3d.lengthVector();
+			float f4 = MathHelper.cos((float) f);
+			f4 = (float) ((double) f4 * (double) f4 * Math.min(1.0, d1 / 0.4));
+			sp.motionY += -0.08 + (double) f4 * 0.06;
+			if (sp.motionY < 0.0 && d6 > 0.0) {
+				double d2 = sp.motionY * -0.1 * (double) f4;
+				sp.motionY += d2;
+				sp.motionX += vec3d.x * d2 / d6;
+				sp.motionZ += vec3d.z * d2 / d6;
+			}
+			if (f < 0.0f) {
+				double d10 = d8 * (double) (-MathHelper.sin((float) f)) * 0.04;
+				sp.motionY += d10 * 3.2;
+				sp.motionX -= vec3d.x * d10 / d6;
+				sp.motionZ -= vec3d.z * d10 / d6;
+			}
+			if (d6 > 0.0) {
+				sp.motionX += (vec3d.x / d6 * d8 - sp.motionX) * 0.1;
+				sp.motionZ += (vec3d.z / d6 * d8 - sp.motionZ) * 0.1;
+			}
+			sp.motionX *= 0.9900000095367432;
+			sp.motionY *= 0.9800000190734863;
+			sp.motionZ *= 0.9900000095367432;
+			sp.move(MoverType.SELF, sp.motionX, sp.motionY, sp.motionZ);
+			
+			/* Below, two lines are removed from base Elytra code. However,
+			* As smart moving appears to only intercept movement, and not limitations on said movement,
+			* We now have fully functional Elytra compatibility due to the robust nature of the original code.
+			* -L
+			*/
+			
+			if (sp.collidedHorizontally && !sp.world.isRemote
+					&& (f5 = (float) ((d3 = d8
+							- (d11 = Math.sqrt(sp.motionX * sp.motionX + sp.motionZ * sp.motionZ)))
+							* 10.0 - 3.0)) > 0.0f) {
+				//sp.playSound(sp.getFallSound((int) f5), 1.0f, 1.0f);
+				sp.attackEntityFrom(DamageSource.FLY_INTO_WALL, f5);
+			}
+			if (sp.onGround && !sp.world.isRemote) {
+				//sp.setFlag(7, false);
+			}
+
+		
+			
+			return;}
 		if (sp.motionX == 0 && prevMotionX < 0.005)
 			sp.motionX = prevMotionX;
 
